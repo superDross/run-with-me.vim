@@ -8,8 +8,8 @@ if exists('g:runner_rowsize') ==# 0
 endif
 
 
-if exists('g:runner_extensions') ==# 0
-  let g:runner_extensions = {
+if exists('g:runner_cmds') ==# 0
+  let g:runner_cmds = {
   \    'javascript.jsx': 'node',
   \    'javascript': 'node',
   \    'vim': 'vim -N -u NONE -n -c "set nomore" -S'
@@ -17,12 +17,19 @@ if exists('g:runner_extensions') ==# 0
 endif
 
 
+function! GetCommand(filetype)
+  " constructs the full command to be run in the terminal
+  let cmd = get(g:runner_cmds, a:filetype, a:filetype)
+  return cmd . " " . expand('%:p')
+endfunction
+
+
 function! CheckVersion()
   " warn user of incompatibility
   try
     if has('nvim')
       throw "neovim unsupported"
-    elseif v:version > 800
+    elseif v:version < 800
       throw "invalid version"
     endif
   catch /.*neovim unsupported/
@@ -35,7 +42,7 @@ endfunction
 
 function! RemovePreExistingBuffer(cmd)
   " deletes buffers containing previous script executions
-  let name = "!" . a:cmd . " " . expand('%:p')
+  let name = "!" . a:cmd
   for bufinfo in getbufinfo()
     if bufinfo.name =~# name && bufexists(bufinfo.bufnr)
       execute 'silent! bd! ' . bufinfo.bufnr
@@ -44,26 +51,25 @@ function! RemovePreExistingBuffer(cmd)
 endfunction
 
 
-function! RunScriptInTerminal()
+function! RunScriptInTerminal(cmd)
   " run current buffers code in a new terminal window
   write
-  execute "term ++rows=" . g:runner_rowsize . " " . a:cmd  . " " . expand('%:p')
+  execute "term ++rows=" . g:runner_rowsize . " " . a:cmd
   wincmd p
 endfunction
 
 
 function! Runner()
-  call CheckVersion()
   let filetype = &ft
-
   if filetype ==# ""
     return
   endif
-
-  let cmd = get(g:runner_extensions, filetype, fftype)
+  let cmd = GetCommand(filetype)
+  call CheckVersion()
   call RemovePreExistingBuffer(cmd)
   call RunScriptInTerminal(cmd)
 endfunction
 
 
-nnoremap <leader>1 :call Runner()<CR>
+command! RunCode :call Runner()
+nnoremap <silent> <Plug>(run_code) :RunCode<Return>
