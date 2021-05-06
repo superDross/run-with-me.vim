@@ -52,7 +52,7 @@ function! RunScriptInTerminal()
 endfunction
 
 
-function! RunScriptInTerminal()
+function! Runner()
   call CheckVersion()
   let filetype = &ft
 
@@ -66,4 +66,4 @@ function! RunScriptInTerminal()
 endfunction
 
 
-nnoremap <leader>1 :exec RunScriptInTerminal()<Bar>exec 'wincmd p'<CR>
+nnoremap <leader>1 :call Runner()<CR>
