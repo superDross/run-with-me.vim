@@ -12,7 +12,8 @@ if exists('g:runner_cmds') ==# 0
   let g:runner_cmds = {
   \    'javascript.jsx': 'node',
   \    'javascript': 'node',
-  \    'vim': 'vim -N -u NONE -n -c "set nomore" -S'
+  \    'vim': 'vim -N -u NONE -n -c "set nomore" -S',
+  \    'tex': 'pdflatex'
   \ }
 endif
 
