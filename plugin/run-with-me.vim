@@ -72,7 +72,7 @@ endfunction
 
 function! RemovePreExistingBuffer(cmd)
   " deletes buffers containing previous script executions
-  let name = "!" . a:cmd
+  let name = has("nvim") == 1 ? a:cmd : "!" . a:cmd
   for bufinfo in getbufinfo()
     if bufinfo.name =~# name && bufexists(bufinfo.bufnr)
       execute 'silent! bd! ' . bufinfo.bufnr
