@@ -46,9 +46,11 @@ function! GetTerminalCommand(vert)
   " returns terminal command string in horizontal or vertical mode
   " a:vert (bool) = whether to run in vertical window
   if a:vert ==# 0
-    return "term ++rows=" . g:runner_rowsize
+    let nv_cmd = "sp | resize " . g:runner_rowsize . " | term "
+    let v_cmd = "term ++rows=" . g:runner_rowsize
+    return has("nvim") == 1 ? nv_cmd : v_cmd
   else
-    return "vert term "
+    return has("nvim") == 1 ? "vs | term " : "vert | term "
   endif
 endfunction
 
@@ -57,12 +59,10 @@ function! CheckVersion()
   " warn user of incompatibility
   try
     if has('nvim')
-      throw "neovim unsupported"
+      return
     elseif v:version < 802
       throw "invalid version"
     endif
-  catch /.*neovim unsupported/
-    echoerr "This plugin is not compatible with Neovim"
   catch /.*invalid version/
     " use of default args supported in 8.1.13 or above
     echoerr "This plugin only supports vim >= 8.2"
@@ -86,6 +86,7 @@ function! RunCommandInTerminal(cmd, vert)
   write
   let termcmd = GetTerminalCommand(a:vert)
   execute termcmd . " " . a:cmd
+  normal G
   wincmd p
 endfunction
 

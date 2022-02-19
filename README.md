@@ -9,7 +9,7 @@ Runs the current buffers code or tests in a separate terminal window.
 
 ## Installation
 
-Supports vim version 8.2 or above (neovim not supported).
+Supports both vim >= version 8.2 and neovim.
 
 In your vimrc file;
 
