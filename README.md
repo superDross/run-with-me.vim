@@ -4,7 +4,7 @@ A simple script runner plugin with a pompous name.
 
 Runs the current buffers code or tests in a separate terminal window.
 
-![](docs/run-with-me.gif)
+![](https://user-images.githubusercontent.com/16519378/186270965-38799bd8-86b4-442a-a6ab-65b1006f8f3f.gif)
 
 
 ## Installation
