@@ -86,7 +86,7 @@ function! GetTerminalCommand(vert)
     let v_cmd = 'term ++rows=' . g:runner_rowsize
     return has('nvim') == 1 ? nv_cmd : v_cmd
   else
-    return has('nvim') == 1 ? 'vs | term ' : 'vert | term '
+    return has('nvim') == 1 ? 'vs | term ' : 'vert term '
   endif
 endfunction
 
@@ -127,7 +127,7 @@ function! RunCommandInTerminal(cmd, vert)
 endfunction
 
 
-function! Runner(cmd, vert = 0)
+function! Runner(cmd, vert)
   " runs a given command in a terminal
   call CheckVersion()
   call RemovePreExistingBuffer(a:cmd)
@@ -135,7 +135,7 @@ function! Runner(cmd, vert = 0)
 endfunction
 
 
-function! RunScript(vert = 0)
+function! RunScript(vert)
   " executes current windows code in a terminal
   let filetype = &filetype
   if filetype ==# ''
@@ -146,7 +146,7 @@ function! RunScript(vert = 0)
 endfunction
 
 
-function! RunTestSuite(vert = 0)
+function! RunTestSuite(vert)
   " executes testing command in a terminal
   let filetype = &filetype
   if filetype ==# ''
@@ -157,7 +157,7 @@ function! RunTestSuite(vert = 0)
 endfunction
 
 
-function! RunNearestTest(vert = 0)
+function! RunNearestTest(vert)
   " run test nearest that is above the cursor
   let filetype = &filetype
   if filetype ==# ''
@@ -169,14 +169,9 @@ endfunction
 
 
 
-command! -nargs=* RunCode :call RunScript(<args>)
-nnoremap <silent> <Plug>(run_code) :RunCode 0<Return>
-nnoremap <silent> <Plug>(run_code_vert) :RunCode 1<Return>
-
-command! -nargs=* RunTests :call RunTestSuite(<args>)
-nnoremap <silent> <Plug>(run_tests) :RunTests 0<Return>
-nnoremap <silent> <Plug>(run_tests_vert) :RunTests 1<Return>
-
-command! -nargs=* RunNearestTest :call RunNearestTest(<args>)
-nnoremap <silent> <Plug>(run_nearest_test) :RunNearestTest 0<Return>
-nnoremap <silent> <Plug>(run_nearest_test_vert) :RunNearestTest 1<Return>
+command! -nargs=* RunCode :call RunScript(0)
+command! -nargs=* RunCodeVert :call RunScript(1)
+command! -nargs=* RunTests :call RunTestSuite(0)
+command! -nargs=* RunTestsVert :call RunTestSuite(1)
+command! -nargs=* RunNearestTest :call RunNearestTest(0)
+command! -nargs=* RunNearestTestVert :call RunNearestTest(1)

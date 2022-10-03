@@ -27,9 +27,9 @@ Execute `:RunCode` to run your current windows code in a terminal.
 Alternatively, you can map the command to a key. Place the below snippet into your vimrc to map the command to Leader 9:
 
 ```vim
-nmap <silent> <leader>9 <Plug>(run_code)
+nmap <leader>9 :RunCode<CR>
 " run in vertical terminal window instead
-nmap <silent> <leader>9 <Plug>(run_code_vert)
+nmap <leader>9 :RunCodeVert<CR>
 ```
 
 ### Tests Execution
@@ -41,9 +41,9 @@ Testing command to run will be dependant upon the current windows filetype. Sett
 Mappings can be set like so:
 
 ```vim
-nmap <leader>1 <Plug>(run_tests)
+nmap <leader>1 :RunTests<CR>
 " run in vertical terminal window instead
-nmap <leader>1 <Plug>(run_tests_vert)
+nmap <leader>1 :RunTestsVert<CR>
 ```
 
 Execute `:RunNearestTest` to run *only* the test nearest above the cursor.
@@ -51,9 +51,10 @@ Execute `:RunNearestTest` to run *only* the test nearest above the cursor.
 Mappings can be set like so:
 
 ```vim
-nmap <leader>1 <Plug>(run_nearest_tests)
+
+nmap <leader>1 :RunNearestTest<CR>
 " run in vertical terminal window instead
-nmap <leader>1 <Plug>(run_nearest_test_vert)
+nmap <leader>1 :RunNearestTestVert<CR>
 ```
 
 ## Configuration
