@@ -46,6 +46,15 @@ nmap <leader>1 <Plug>(run_tests)
 nmap <leader>1 <Plug>(run_tests_vert)
 ```
 
+Execute `:RunNearestTest` to run *only* the test nearest above the cursor.
+
+Mappings can be set like so:
+
+```vim
+nmap <leader>1 <Plug>(run_nearest_tests)
+" run in vertical terminal window instead
+nmap <leader>1 <Plug>(run_nearest_test_vert)
+```
 
 ## Configuration
 
@@ -77,5 +86,5 @@ let g:testing_cmds = {
 The below config will run the given test command regardless of filetype:
 
 ```vim
-let g:default_testing_cmd = "make test"
+let g:default_testing_cmd = 'make test'
 ```
