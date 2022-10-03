@@ -1,6 +1,5 @@
 " run-with-me.vim - Run With Me
 " Author:      David Ross <https://github.com/superDross/>
-" Version:     0.01
 
 
 if exists('g:runner_rowsize') ==# 0
@@ -29,149 +28,10 @@ if exists('g:testing_cmds') ==# 0
   \ }
 endif
 
-function! GetNearestFuncName()
-  " get the the nearest func aboves name and print it
-  let view = winsaveview()
-  normal [[0w
-  let func_name = expand('<cword>')
-  call winrestview(view)
-  return func_name
-endfunction
 
-
-function! GetTestingCommand(filetype)
-  " returns testing command in string format
-  if exists('g:default_testing_cmd') ==# 1
-    return g:default_testing_cmd
-  else
-    return get(g:testing_cmds, a:filetype)
-  endif
-endfunction
-
-
-function! GetNearestPythonTestingCommand(func_name)
-  " run nearest python test above the cursor
-  let full_test_path = expand('%:.') . '::' . a:func_name
-  return GetTestingCommand('python') . '"' . full_test_path . '"'
-endfunction
-
-
-function! GetNearestTestingCommand(filetype)
-  " run test nearest that is above the cursor
-  let func_name = GetNearestFuncName()
-  if tolower(func_name) !~# '^test'
-    throw 'Test ' . func_name . ' does not begin with test'
-  endif
-
-  if a:filetype ==# 'python'
-    return GetNearestPythonTestingCommand(func_name)
-  else
-    throw 'Executing nearest test only works with python'
-  endif
-endfunction
-
-
-function! GetScriptCommand(filetype)
-  " constructs the full command to be run in the terminal
-  let cmd = get(g:runner_cmds, a:filetype, a:filetype)
-  return cmd . ' ' . expand('%:p')
-endfunction
-
-
-function! GetTerminalCommand(vert)
-  " returns terminal command string in horizontal or vertical mode
-  " a:vert (bool) = whether to run in vertical window
-  if a:vert ==# 0
-    let nv_cmd = 'sp | resize ' . g:runner_rowsize . ' | term '
-    let v_cmd = 'term ++rows=' . g:runner_rowsize
-    return has('nvim') == 1 ? nv_cmd : v_cmd
-  else
-    return has('nvim') == 1 ? 'vs | term ' : 'vert term '
-  endif
-endfunction
-
-
-function! CheckVersion()
-  " warn user of incompatibility
-  try
-    if has('nvim')
-      return
-    elseif v:version < 802
-      throw 'invalid version'
-    endif
-  catch /.*invalid version/
-    " use of default args supported in 8.1.13 or above
-    echoerr 'This plugin only supports vim >= 8.2'
-  endtry
-endfunction
-
-
-function! RemovePreExistingBuffer(cmd)
-  " deletes buffers containing previous script executions
-  let name = has('nvim') == 1 ? a:cmd : '!' . a:cmd
-  for bufinfo in getbufinfo()
-    if bufinfo.name =~# name && bufexists(bufinfo.bufnr)
-      execute 'silent! bd! ' . bufinfo.bufnr
-    endif
-  endfor
-endfunction
-
-
-function! RunCommandInTerminal(cmd, vert)
-  " run the given command in a new terminal window
-  write
-  let termcmd = GetTerminalCommand(a:vert)
-  execute termcmd . ' ' . a:cmd
-  normal G
-  wincmd p
-endfunction
-
-
-function! Runner(cmd, vert)
-  " runs a given command in a terminal
-  call CheckVersion()
-  call RemovePreExistingBuffer(a:cmd)
-  call RunCommandInTerminal(a:cmd, a:vert)
-endfunction
-
-
-function! RunScript(vert)
-  " executes current windows code in a terminal
-  let filetype = &filetype
-  if filetype ==# ''
-    return
-  endif
-  let cmd = GetScriptCommand(filetype)
-  call Runner(cmd, a:vert)
-endfunction
-
-
-function! RunTestSuite(vert)
-  " executes testing command in a terminal
-  let filetype = &filetype
-  if filetype ==# ''
-    return
-  endif
-  let cmd = GetTestingCommand(filetype)
-  call Runner(cmd, a:vert)
-endfunction
-
-
-function! RunNearestTest(vert)
-  " run test nearest that is above the cursor
-  let filetype = &filetype
-  if filetype ==# ''
-    return
-  endif
-  let cmd = GetNearestTestingCommand(filetype)
-  call Runner(cmd, a:vert)
-endfunction
-
-
-
-command! -nargs=* RunCode :call RunScript(0)
-command! -nargs=* RunCodeVert :call RunScript(1)
-command! -nargs=* RunTests :call RunTestSuite(0)
-command! -nargs=* RunTestsVert :call RunTestSuite(1)
-command! -nargs=* RunNearestTest :call RunNearestTest(0)
-command! -nargs=* RunNearestTestVert :call RunNearestTest(1)
+command! -nargs=* RunCode :call runwithme#runner#RunScript(0)
+command! -nargs=* RunCodeVert :call runwithme#runner#RunScript(1)
+command! -nargs=* RunTests :call runwithme#tests#RunTestSuite(0)
+command! -nargs=* RunTestsVert :call runwithme#tests#RunTestSuite(1)
+command! -nargs=* RunNearestTest :call runwithme#tests#RunNearestTest(0)
+command! -nargs=* RunNearestTestVert :call runwithme#tests#RunNearestTest(1)
