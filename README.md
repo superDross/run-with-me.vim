@@ -46,6 +46,16 @@ nmap <leader>1 :RunTests<CR>
 nmap <leader>1 :RunTestsVert<CR>
 ```
 
+Execute `:RunModuleTests` to run *only* the tests in the current file.
+
+Mappings can be set like so:
+
+```vim
+nmap <leader>1 :RunModuleTest<CR>
+" run in vertical terminal window instead
+nmap <leader>1 :RunModuleTestVert<CR>
+```
+
 Execute `:RunNearestTest` to run *only* the test nearest above the cursor.
 
 Mappings can be set like so:

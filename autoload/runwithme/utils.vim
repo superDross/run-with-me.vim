@@ -30,6 +30,7 @@ endfunction
 
 function! runwithme#utils#RemovePreExistingBuffer(cmd) abort
   " deletes buffers containing previous script executions
+  " a:cmd (str): previously run command (used to find buffer)
   let name = has('nvim') == 1 ? a:cmd : '!' . a:cmd
   for bufinfo in getbufinfo()
     if bufinfo.name =~# name && bufexists(bufinfo.bufnr)
