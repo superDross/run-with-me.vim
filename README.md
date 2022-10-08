@@ -46,6 +46,15 @@ nmap <leader>1 :RunTests<CR>
 nmap <leader>1 :RunTestsVert<CR>
 ```
 
+<!-- https://github.com/community/community/discussions/16925 -->
+<!-- > **Note** -->
+<!-- > 
+<!-- > This is a note -->
+
+> **Warning**
+>
+> The following test commands only work with _Python_ tests.
+
 Execute `:RunModuleTests` to run *only* the tests in the current file.
 
 Mappings can be set like so:
