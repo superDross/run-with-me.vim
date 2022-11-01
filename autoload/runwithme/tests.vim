@@ -9,9 +9,9 @@ function! runwithme#tests#GetTestingCommand() abort
     return
   endif
   if exists('g:default_testing_cmd') ==# 1
-    return g:default_testing_cmd . ' '
+    return g:default_testing_cmd
   else
-    return get(g:testing_cmds, &filetype) . ' '
+    return get(g:testing_cmds, &filetype)
   endif
 endfunction
 

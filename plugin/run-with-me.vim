@@ -24,7 +24,7 @@ endif
 
 if exists('g:testing_cmds') ==# 0
   let g:testing_cmds = {
-  \     'python': 'pytest',
+  \     'python': 'pytest ',
   \ }
 endif
 
