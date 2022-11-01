@@ -30,7 +30,7 @@ function! runwithme#runner#RunCommandInTerminal(cmd, vert) abort
   write
   let termcmd = runwithme#runner#GetTerminalCommand(a:vert)
   execute termcmd . ' ' . a:cmd
-  normal G
+  normal! G
   wincmd p
 endfunction
 
@@ -53,4 +53,14 @@ function! runwithme#runner#RunScript(vert) abort
   endif
   let cmd = runwithme#runner#GetScriptCommand()
   call runwithme#runner#Runner(cmd, a:vert)
+endfunction
+
+
+function! runwithme#runner#RunSelectedCode(vert) abort
+  " executes current or previous visually selected code in a terminal
+  " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
+  let filename = '/tmp/' . fnamemodify(bufname('%'), ':t')
+  call writefile(runwithme#utils#GetVisualSelection(), filename)
+  let cmd = get(g:runner_cmds, &filetype, &filetype)
+  call runwithme#runner#Runner(cmd . ' ' . filename, a:vert)
 endfunction

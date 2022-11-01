@@ -24,13 +24,16 @@ endif
 
 if exists('g:testing_cmds') ==# 0
   let g:testing_cmds = {
-  \     'python': 'pytest ',
+  \     'python': 'pytest',
   \ }
 endif
 
 
 command! -nargs=* RunCode :call runwithme#runner#RunScript(0)
 command! -nargs=* RunCodeVert :call runwithme#runner#RunScript(1)
+
+command! -range RunSelectedCode :call runwithme#runner#RunSelectedCode(0)
+command! -range RunSelectedCodeVert :call runwithme#runner#RunSelectedCode(1)
 
 command! -nargs=* RunTests :call runwithme#tests#RunTestSuite(0)
 command! -nargs=* RunTestsVert :call runwithme#tests#RunTestSuite(1)
