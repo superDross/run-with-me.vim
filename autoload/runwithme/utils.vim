@@ -6,7 +6,7 @@
 function! runwithme#utils#GetNearestFuncName() abort
   " get the the nearest func aboves name and return it
   let view = winsaveview()
-  normal! [[0w
+  normal [[0w
   let func_name = expand('<cword>')
   call winrestview(view)
   return func_name
