@@ -6,7 +6,7 @@
 function! runwithme#utils#GetNearestFuncName() abort
   " get the the nearest func aboves name and return it
   let view = winsaveview()
-  normal [[0w
+  normal! [[0w
   let func_name = expand('<cword>')
   call winrestview(view)
   return func_name
@@ -37,4 +37,12 @@ function! runwithme#utils#RemovePreExistingBuffer(cmd) abort
       execute 'silent! bd! ' . bufinfo.bufnr
     endif
   endfor
+endfunction
+
+
+function! runwithme#utils#GetVisualSelection() abort
+  " return current or previous text selected in visual mode
+  let start = getpos("'<")[1]
+  let end = getpos("'>")[1]
+  return getline(start, end)
 endfunction

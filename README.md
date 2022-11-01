@@ -18,7 +18,7 @@ Plug 'superDross/run-with-me.vim'
 ```
 
 
-## Execution
+## Usage
 
 ### Script Execution
 
@@ -31,6 +31,19 @@ nmap <leader>9 :RunCode<CR>
 " run in vertical terminal window instead
 nmap <leader>9 :RunCodeVert<CR>
 ```
+
+### Visual Execution
+
+Execute `:RunSelectedCode` to run code selected in visual mode.
+
+Alternatively, you can map the command to a key. Place the below snippet into your vimrc to map the command to Leader 9:
+
+```vim
+nmap <leader>9 :RunSelectedCode<CR>
+" run in vertical terminal window instead
+nmap <leader>9 :RunSelectedCodeVert<CR>
+```
+
 
 ### Tests Execution
 
@@ -84,23 +97,16 @@ Change row size of the horizontal terminal output:
 let g:runner_rowsize = 15
 ```
 
-Use a different command other than the filetype:
+Overwrite base commands for a give language e.g. use python3.9 for all python script executions:
 
 ```vim
-" e.g. if filetype is javascript run script with node command
-let g:runner_cmds = {
-\    'javascript.jsx': 'node',
-\    'javascript': 'node',
-\    'vim': 'vim -N -u NONE -n -c "set nomore" -S'
-\ }
+let g:runner_cmds['python'] = 'python3.9'
 ```
 
-Configure testing command for each filetype:
+Overwrite base testing command for a given language e.g. use nosetests instead of pytest for python:
 
 ```vim
-let g:testing_cmds = {
-\     'python': 'pytest',
-\ }
+let g:testing_cmds['python'] = 'nosetests'
 ```
 
 The below config will run the given test command regardless of filetype:
