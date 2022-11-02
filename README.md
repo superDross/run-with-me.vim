@@ -32,6 +32,9 @@ nmap <leader>9 :RunCode<CR>
 nmap <leader>9 :RunCodeVert<CR>
 ```
 
+![runcode](https://user-images.githubusercontent.com/16519378/199552946-f8362b1d-940d-4587-8f4f-36779f9ebd90.gif)
+
+
 ### Visual Execution
 
 Execute `:RunSelectedCode` to run code selected in visual mode.
@@ -43,6 +46,8 @@ nmap <leader>9 :RunSelectedCode<CR>
 " run in vertical terminal window instead
 nmap <leader>9 :RunSelectedCodeVert<CR>
 ```
+
+![runselectedcode](https://user-images.githubusercontent.com/16519378/199552991-10a08db6-d428-4aa4-99e7-87af4218dad1.gif)
 
 
 ### Tests Execution
@@ -58,6 +63,9 @@ nmap <leader>1 :RunTests<CR>
 " run in vertical terminal window instead
 nmap <leader>1 :RunTestsVert<CR>
 ```
+
+![runtests](https://user-images.githubusercontent.com/16519378/199553067-12de03fe-f6e2-4901-8e7b-e73a1f3245b3.gif)
+
 
 <!-- https://github.com/community/community/discussions/16925 -->
 <!-- > **Note** -->
@@ -78,6 +86,9 @@ nmap <leader>1 :RunModuleTest<CR>
 nmap <leader>1 :RunModuleTestVert<CR>
 ```
 
+![runmoduletests](https://user-images.githubusercontent.com/16519378/199553163-6a90ead5-3d5c-4f43-bfa1-add7c87c8457.gif)
+
+
 Execute `:RunNearestTest` to run *only* the test nearest above the cursor.
 
 Mappings can be set like so:
@@ -88,6 +99,9 @@ nmap <leader>1 :RunNearestTest<CR>
 " run in vertical terminal window instead
 nmap <leader>1 :RunNearestTestVert<CR>
 ```
+
+![runnearesttest](https://user-images.githubusercontent.com/16519378/199553227-20816336-d8b6-4473-802c-34fa1ecc6388.gif)
+
 
 ## Configuration
 
