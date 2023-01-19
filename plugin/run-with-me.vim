@@ -35,6 +35,9 @@ command! -nargs=* RunCodeVert :call runwithme#runner#RunScript(1)
 command! -range RunSelectedCode :call runwithme#runner#RunSelectedCode(0)
 command! -range RunSelectedCodeVert :call runwithme#runner#RunSelectedCode(1)
 
+command! -range RunToCursor :call runwithme#runner#RunCodeToCursor(0)
+command! -range RunToCursorVert :call runwithme#runner#RunCodeToCursor(1)
+
 command! -nargs=* RunTests :call runwithme#tests#RunTestSuite(0)
 command! -nargs=* RunTestsVert :call runwithme#tests#RunTestSuite(1)
 
