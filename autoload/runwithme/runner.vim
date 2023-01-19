@@ -56,11 +56,27 @@ function! runwithme#runner#RunScript(vert) abort
 endfunction
 
 
+function! runwithme#runner#RunCode(code, vert) abort
+  " run some code parsed as a string
+  " a:code (str): code to directly run
+  " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
+  let filename = '/tmp/' . fnamemodify(bufname('%'), ':t')
+  call writefile(a:code, filename)
+  let cmd = get(g:runner_cmds, &filetype, &filetype)
+  call runwithme#runner#Runner(cmd . ' ' . filename, a:vert)
+endfunction
+
+
 function! runwithme#runner#RunSelectedCode(vert) abort
   " executes current or previous visually selected code in a terminal
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
-  let filename = '/tmp/' . fnamemodify(bufname('%'), ':t')
-  call writefile(runwithme#utils#GetVisualSelection(), filename)
-  let cmd = get(g:runner_cmds, &filetype, &filetype)
-  call runwithme#runner#Runner(cmd . ' ' . filename, a:vert)
+  let selectedcode = getline(getpos("'<")[1], getpos("'>")[1])
+  call runwithme#runner#RunCode(selectedcode, a:vert)
+endfunction
+
+
+function! runwithme#runner#RunCodeToCursor(vert) abort
+  " executes code from first line to the current cursor line
+  " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
+  call runwithme#runner#RunCode(getline(0, line('.')), a:vert)
 endfunction

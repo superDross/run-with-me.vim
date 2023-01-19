@@ -38,11 +38,3 @@ function! runwithme#utils#RemovePreExistingBuffer(cmd) abort
     endif
   endfor
 endfunction
-
-
-function! runwithme#utils#GetVisualSelection() abort
-  " return current or previous text selected in visual mode
-  let start = getpos("'<")[1]
-  let end = getpos("'>")[1]
-  return getline(start, end)
-endfunction
