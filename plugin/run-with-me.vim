@@ -14,6 +14,7 @@ endif
 
 if exists('g:runner_cmds') ==# 0
   let g:runner_cmds = {
+  \    'python': 'python3',
   \    'javascript.jsx': 'node',
   \    'javascript': 'node',
   \    'vim': 'vim -N -u NONE -n -c "set nomore" -S',
