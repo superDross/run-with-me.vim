@@ -37,9 +37,25 @@ nmap <leader>9 :RunCodeVert<CR>
 ![runcode](https://user-images.githubusercontent.com/16519378/199552946-f8362b1d-940d-4587-8f4f-36779f9ebd90.gif)
 
 
+### Execute to Cursor
+
+Execute `:RunToCursor` to run your current windows code from the start of the file to the line in which the cursor is sitting upon in a terminal.
+
+You can also parse commandline arguments, for example if your script accepts a `--file` argument you can execute the following `:RunToCursor --file test.txt`.
+
+Alternatively, you can map the command to a key. Place the below snippet into your vimrc to map the command to Leader 9:
+
+```vim
+nmap <leader>9 :RunToCursor<CR>
+" run in vertical terminal window instead
+nmap <leader>9 :RunToCursorVert<CR>
+```
+
 ### Visual Execution
 
 Execute `:RunSelectedCode` to run code selected in visual mode.
+
+You can also parse commandline arguments, for example if your script accepts a `--file` argument you can execute the following `:RunSelectedCode --file test.txt`.
 
 Alternatively, you can map the command to a key. Place the below snippet into your vimrc to map the command to Leader 9:
 
