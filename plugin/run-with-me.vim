@@ -33,11 +33,11 @@ endif
 command! -nargs=? RunCode :call runwithme#runner#RunScript(<q-args>,0)
 command! -nargs=? RunCodeVert :call runwithme#runner#RunScript(<q-args>,1)
 
-command! -range RunSelectedCode :call runwithme#runner#RunSelectedCode(0)
-command! -range RunSelectedCodeVert :call runwithme#runner#RunSelectedCode(1)
+command! -range -nargs=? RunSelectedCode :call runwithme#runner#RunSelectedCode(<q-args>,0)
+command! -range -nargs=? RunSelectedCodeVert :call runwithme#runner#RunSelectedCode(<q-args>,1)
 
-command! -range RunToCursor :call runwithme#runner#RunCodeToCursor(0)
-command! -range RunToCursorVert :call runwithme#runner#RunCodeToCursor(1)
+command! -range -nargs=? RunToCursor :call runwithme#runner#RunCodeToCursor(<q-args>,0)
+command! -range -nargs=? RunToCursorVert :call runwithme#runner#RunCodeToCursor(<q-args>,1)
 
 command! -nargs=* RunTests :call runwithme#tests#RunTestSuite(0)
 command! -nargs=* RunTestsVert :call runwithme#tests#RunTestSuite(1)

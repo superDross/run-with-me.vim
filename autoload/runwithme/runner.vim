@@ -3,10 +3,10 @@
 " Module containing script runner logic
 
 
-function! runwithme#runner#GetScriptCommand(args) abort
+function! runwithme#runner#GetScriptCommand() abort
   " constructs the full command to be run in the terminal
   let cmd = get(g:runner_cmds, &filetype, &filetype)
-  return cmd . ' ' . expand('%:p') . ' ' . a:args
+  return cmd . ' ' . expand('%:p')
 endfunction
 
 
@@ -51,32 +51,33 @@ function! runwithme#runner#RunScript(args, vert) abort
   if &filetype ==# ''
     return
   endif
-  let cmd = runwithme#runner#GetScriptCommand(a:args)
-  call runwithme#runner#Runner(cmd, a:vert)
+  let cmd = runwithme#runner#GetScriptCommand()
+  call runwithme#runner#Runner(cmd . ' ' . a:args, a:vert)
 endfunction
 
 
-function! runwithme#runner#RunCode(code, vert) abort
+function! runwithme#runner#RunCode(code, args, vert) abort
   " run some code parsed as a string
   " a:code (str): code to directly run
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   let filename = '/tmp/' . fnamemodify(bufname('%'), ':t')
   call writefile(a:code, filename)
   let cmd = get(g:runner_cmds, &filetype, &filetype)
-  call runwithme#runner#Runner(cmd . ' ' . filename, a:vert)
+  let full_cmd = cmd . ' ' . filename . ' ' . a:args
+  call runwithme#runner#Runner(full_cmd, a:vert)
 endfunction
 
 
-function! runwithme#runner#RunSelectedCode(vert) abort
+function! runwithme#runner#RunSelectedCode(args, vert) abort
   " executes current or previous visually selected code in a terminal
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   let selectedcode = getline(getpos("'<")[1], getpos("'>")[1])
-  call runwithme#runner#RunCode(selectedcode, a:vert)
+  call runwithme#runner#RunCode(selectedcode, a:args, a:vert)
 endfunction
 
 
-function! runwithme#runner#RunCodeToCursor(vert) abort
+function! runwithme#runner#RunCodeToCursor(args, vert) abort
   " executes code from first line to the current cursor line
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
-  call runwithme#runner#RunCode(getline(0, line('.')), a:vert)
+  call runwithme#runner#RunCode(getline(0, line('.')), a:args, a:vert)
 endfunction
