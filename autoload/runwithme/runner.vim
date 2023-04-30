@@ -3,10 +3,10 @@
 " Module containing script runner logic
 
 
-function! runwithme#runner#GetScriptCommand() abort
+function! runwithme#runner#GetScriptCommand(args) abort
   " constructs the full command to be run in the terminal
   let cmd = get(g:runner_cmds, &filetype, &filetype)
-  return cmd . ' ' . expand('%:p')
+  return cmd . ' ' . expand('%:p') . ' ' . a:args
 endfunction
 
 
@@ -45,13 +45,13 @@ function! runwithme#runner#Runner(cmd, vert) abort
 endfunction
 
 
-function! runwithme#runner#RunScript(vert) abort
+function! runwithme#runner#RunScript(args, vert) abort
   " executes current windows code in a terminal
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   if &filetype ==# ''
     return
   endif
-  let cmd = runwithme#runner#GetScriptCommand()
+  let cmd = runwithme#runner#GetScriptCommand(a:args)
   call runwithme#runner#Runner(cmd, a:vert)
 endfunction
 

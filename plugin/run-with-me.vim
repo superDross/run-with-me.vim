@@ -30,8 +30,8 @@ if exists('g:testing_cmds') ==# 0
 endif
 
 
-command! -nargs=* RunCode :call runwithme#runner#RunScript(0)
-command! -nargs=* RunCodeVert :call runwithme#runner#RunScript(1)
+command! -nargs=? RunCode :call runwithme#runner#RunScript(<q-args>,0)
+command! -nargs=? RunCodeVert :call runwithme#runner#RunScript(<q-args>,1)
 
 command! -range RunSelectedCode :call runwithme#runner#RunSelectedCode(0)
 command! -range RunSelectedCodeVert :call runwithme#runner#RunSelectedCode(1)
