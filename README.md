@@ -24,6 +24,8 @@ Plug 'superDross/run-with-me.vim'
 
 Execute `:RunCode` to run your current windows code in a terminal.
 
+You can also parse commandline arguments, for example if your script accepts a `--file` argument you can execute the following `:RunCode --file test.txt`.
+
 Alternatively, you can map the command to a key. Place the below snippet into your vimrc to map the command to Leader 9:
 
 ```vim
