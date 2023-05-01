@@ -35,13 +35,14 @@ function! runwithme#runner#RunCommandInTerminal(cmd, vert) abort
 endfunction
 
 
-function! runwithme#runner#Runner(cmd, vert) abort
+function! runwithme#runner#Runner(base_cmd, args, vert) abort
   " runs a given command in a terminal
   " cmd: command to run in the terminal
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   call runwithme#utils#CheckVersion()
-  call runwithme#utils#RemovePreExistingBuffer(a:cmd)
-  call runwithme#runner#RunCommandInTerminal(a:cmd, a:vert)
+  " we should remove buffers based upon the base command; args don't matter
+  call runwithme#utils#RemovePreExistingBuffer(a:base_cmd)
+  call runwithme#runner#RunCommandInTerminal(a:base_cmd . ' ' . a:args, a:vert)
 endfunction
 
 
@@ -51,8 +52,8 @@ function! runwithme#runner#RunScript(args, vert) abort
   if &filetype ==# ''
     return
   endif
-  let cmd = runwithme#runner#GetScriptCommand()
-  call runwithme#runner#Runner(cmd . ' ' . a:args, a:vert)
+  let base_cmd = runwithme#runner#GetScriptCommand()
+  call runwithme#runner#Runner(base_cmd, a:args, a:vert)
 endfunction
 
 
@@ -62,9 +63,8 @@ function! runwithme#runner#RunCode(code, args, vert) abort
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   let filename = '/tmp/' . fnamemodify(bufname('%'), ':t')
   call writefile(a:code, filename)
-  let cmd = get(g:runner_cmds, &filetype, &filetype)
-  let full_cmd = cmd . ' ' . filename . ' ' . a:args
-  call runwithme#runner#Runner(full_cmd, a:vert)
+  let base_cmd = get(g:runner_cmds, &filetype, &filetype)
+  call runwithme#runner#Runner(base_cmd . ' ' . filename, a:args, a:vert)
 endfunction
 
 

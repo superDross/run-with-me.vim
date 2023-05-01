@@ -44,7 +44,7 @@ function! runwithme#tests#RunNearestTest(vert) abort
   " run test nearest above the cursor
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   let cmd = runwithme#tests#GetNearestTestingCommand(1)
-  call runwithme#runner#Runner(cmd, a:vert)
+  call runwithme#runner#Runner(cmd, '',  a:vert)
 endfunction
 
 
@@ -52,7 +52,7 @@ function! runwithme#tests#RunModuleTests(vert) abort
   " run all tests in the current file
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   let cmd = runwithme#tests#GetNearestTestingCommand(0)
-  call runwithme#runner#Runner(cmd, a:vert)
+  call runwithme#runner#Runner(cmd, '', a:vert)
 endfunction
 
 
@@ -60,5 +60,5 @@ function! runwithme#tests#RunTestSuite(vert) abort
   " executes entire testing suite
   " a:vert (bool): 1 run in vertical terminal, 0 run in horizontal terminal
   let cmd = runwithme#tests#GetTestingCommand()
-  call runwithme#runner#Runner(cmd, a:vert)
+  call runwithme#runner#Runner(cmd, '', a:vert)
 endfunction
